@@ -5,7 +5,7 @@
 
 char* makeGuess(char *guess, char *known, int length) {
 	int i;
-	int unknown = -1;
+	int unknown = 0;
 
 	// find the index of the first unknown character
 	for(i = 0; i < length; i++) {
@@ -14,16 +14,8 @@ char* makeGuess(char *guess, char *known, int length) {
 			break;
 		}
 	}
-
-	if(unknown > -1) {
-		if(guess[unknown] >= 126) {
-			// just in case
-			guess[unknown] = 32;
-		}
-		else {
-			guess[unknown]++;
-		}
-	}
+	
+	guess[unknown]++;
 
 	return guess;
 }
@@ -38,7 +30,7 @@ char checkGuess(char *guess, char *pw, char *known, int length) {
 			known[i] = 1;
 		}
 		else {
-			// we found a charcter that did not match
+			// we found a character that did not match
 			known[i] = 0;
 			isCorrect = 0;
 		}
@@ -55,14 +47,14 @@ char* init(int length) {
 
 int main(int argc, char **argv)
 {
-  if(argc != 3)
+  if(argc != 2)
   {
     fprintf(stderr, "USAGE: %s Password Length\n", argv[0]);
     exit(1);
   }
 
   double t, time1, time2;
-  long length = strtol(argv[2], NULL, 10);
+  long length = strlen(argv[1]);
   char solved = 0;
   char *pw, *guess, *known;
 
